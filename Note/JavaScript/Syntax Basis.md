@@ -891,3 +891,162 @@ let a = 1;
 a = !!a;  // 与调用Boolean函数相同
 ```
 
+#### 与 或
+
+与非不同，是二元运算符。
+
+与运算存在逻辑惰性，如果第一个结果已经是false，后面的内容不会执行。
+
+```js
+true && alert('hello');
+
+false && alert('123');
+```
+
+非布尔值进行与运算，转化为布尔进行运算，但返回原值：
+
+```js
+1 && 2  // 2
+1 && 0  // 0
+2 && 1  // 1
+0 && NaN  // 0
+2 && 'a'  // 'a'
+```
+
+或运算存在逻辑短路，只要第一个为true，就不会看运算符后面的内容。
+
+非布尔值进行或运算，转化为布尔值进行计算，但返回原值。
+
+```js
+NaN || null  // null
+```
+
+### 关系运算符
+
+比较两个值之间的关系是否成立，返回值为bool值。
+
+```
+> < >= <= 
+```
+
+对于非数值进行关系运算，会先将其转化为数字再比较；但字符串与字符串的比较就是比较再Unicode编码中的**字典序**。
+
+
+
+实验得到：NaN小于任何数值。
+
+```js
+12 > 'px'  // true
+```
+
+JS中不支持：
+
+```js
+10 < a < 12
+a > 10 && a < 12  // 和C相同
+```
+
+### 相等运算符
+
+```
+==(相等) ===（全等） != (==的取反, 自动类型转化) !== (===的取反，不进行自动类型转化) 
+```
+
+相等运算符比较两个不同类型，会将其转化为相同类型（一般是数值）再进行比较。
+
+```js
+1 == '1'
+
+null == undefined  // true
+NaN == NaN  // false
+```
+
+NaN和任何值都不相等，包括自身。
+
+
+
+全等运算符不会做类型转化，只要类型不同一定是false。
+
+```js
+null === undefined  // false，不存在类型转化了 相等不全等
+```
+
+### 条件运算符
+
+也就是C中的三目运算符。
+
+```js
+true ? alert('a'): alert('b');  // 除了赋值，也可以通过执行的角度理解
+```
+
+### 优先级
+
+https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Operator_Precedence
+
+优先级不确定时，使用小括号来保证执行顺序是希望的。
+
+
+
+## 流程控制
+
+### 代码块
+
+使用{}创建代码块，代码块可以对代码进行分组。同一个代码块中的代码如果执行就都执行，若不执行都不执行。
+
+
+
+let和var的区别：
+
+- let声明的变量无法在代码块外使用
+- var声明的变量可以在代码块外使用
+
+```html
+<!DOCTYPE html>
+
+<html lang="en">
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+        <script type="text/javascript">
+            // {
+            //     let a = 10;
+            // }
+
+            // console.log(a);  // Uncaught ReferenceError: a is not defined
+
+            {
+                var b = 10;
+            }
+
+            console.log(b);  // 10
+        </script>
+        <title>Title</title>
+    </head>
+
+    <body>
+    	
+    </body>
+</html>
+```
+
+### 条件判断语句
+
+#### if语句
+
+和C相同，如果只有一条语句，无需大括号，若存在多条语句需要大括号。书写习惯上，左大括号不换行写：
+
+```js
+if(a > 10) {
+    aleart(`a比10大`);
+}
+```
+
+若if条件后不是布尔值，会自动转化为布尔值。
+
+#### if-else语句
+
+总会执行一部分代码，条件满足了执行if后的，若没有满足就执行else后的代码。总会存在二选一执行的代码块。
