@@ -450,7 +450,7 @@ alert就不能再作为函数使用，此时其所指向的对象就是一个数
         	let a = 10000000000000n;
 
             console.log(a);
-            // 控制台中绿色样式输出
+            // 控制台中绿色样式输出，自己之后会有n
             console.log(typeof(a));
             // bigint
         </script>
@@ -499,5 +499,395 @@ alert就不能再作为函数使用，此时其所指向的对象就是一个数
             
     </body>
 </html>
+```
+
+
+
+#### 类型检查
+
+大整数类型不能和其他数据类型做运算，JS发展过程中后添加的，会报错。
+
+typeof运算符，所以可以不用加括号，和C中sizeof类似。
+
+由于JS中变量没有类型，sizeof返回的是变量中值的类型。
+
+
+
+#### 字符串
+
+```html
+<!DOCTYPE html>
+
+<html lang="en">
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+        <title>Title</title>
+
+        <script type="text/javascript">
+        	let a = 'hello';
+
+            console.log(a);
+
+            // 转义字符
+            console.log('aaaa\"');
+            console.log('\\');
+            console.log('\\\\');
+            console.log('a\tb'); // 制表符
+            console.log('a\nb');
+
+            // 模板字符串
+            a = `shuahiu
+            shuiidhui
+            siidhohiod`; // 跨行，换行空格都会被保存
+
+            console.log(a);
+
+            // 模板字符串中可以嵌入变量 类似于f字符串
+            let name = 'Peter';
+            let str = `Hello, ${name}`;
+
+            console.log(str);
+
+            let b = 10;
+
+            console.log(`b = ${b}`);
+            
+        </script>
+    </head>
+
+    <body>
+            
+    </body>
+</html>
+```
+
+typeof 检查字符串返回字符串string（typeof的返回值都是字符串）。
+
+#### 其他数据类型
+
+##### 布尔值boolean
+
+用于进行逻辑判断，仅有两个值true、false。
+
+##### 空值null
+
+表示空对象。
+
+##### 未定义undefined
+
+变量进行了声明却未赋值。也是早期JS不报错核心思想的产物。
+
+自己表示空尽量使用null。
+
+##### 符号Symbol
+
+用来创建唯一的标识。
+
+```html
+<!DOCTYPE html>
+
+<html lang="en">
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+        <title>Title</title>
+
+        <script type="text/javascript">
+        	let a = true;
+
+            console.log(a);  // 蓝色显示，底层也是数字
+            console.log(typeof a);
+
+            let b = null;
+
+            console.log(b);  // 灰色输出
+            console.log(typeof b);  // 返回object 空值表示空对象
+
+            let c;
+
+            console.log(c);
+            console.log(typeof c);
+
+            let d = Symbol();
+
+            console.log(d);
+            console.log(typeof d);
+            
+        </script>
+    </head>
+
+    <body>
+            
+    </body>
+</html>
+```
+
+**所有原始值数据都是不可变数据类型，变量赋值修改的是引用。**
+
+
+
+### 类型转化
+
+类型转换指将某种数据类型转化为其他类型。
+
+#### 字符串
+
+```js
+console.log(a, typeof a);  // 是支持的，和print类似
+```
+
+两种方式：
+
+```html
+<!DOCTYPE html>
+
+<html lang="en">
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+        <title>Title</title>
+
+        <script type="text/javascript">
+        	let a = 10;
+
+            console.log(a.toString());
+            // toSting方法，返回值是字符串，原数据类型不修改
+
+            a = true;
+
+            console.log(a.toString());
+            // true
+
+            a = 11n;
+            console.log(a.toString());
+            // 11
+
+            console.log(null.toString());
+            // Cannot read properties of null
+
+            console.log(undefined.toString());
+            // Cannot read properties of undefined
+
+            // undefined和null没有toSting方法
+
+            console.log(String(undefined));
+            // undefined
+
+            console.log(String(null));
+            // null
+
+            // String函数同样的不会对原数据做修改，而是返回转化的结果
+
+        </script>
+    </head>
+
+    <body>
+            
+    </body>
+</html>
+```
+
+对于用于toString方法的类型，调用toSting和使用Sting函数没有区别；对于null和undefined直接转化为对应字符串。两种方式都是强制（显式）类型转化。
+
+#### 数值
+
+```html
+<!DOCTYPE html>
+
+<html lang="en">
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+        <title>Title</title>
+
+        <script type="text/javascript">
+        	let a = 10;
+
+            console.log(Number('123'));
+            // 只有Number函数一种方式
+
+            console.log(Number('abc'));
+            // NaN 不是纯数字字符串
+
+            console.log(Number('12.345'));
+            // 12.345
+
+            console.log(Number(''));
+            // 字符串为空串或纯空格，转化为0
+
+            console.log(Number(true), Number(false));
+            // 1 0
+
+            console.log(Number(null));
+            // 0
+
+            console.log(Number(undefined));
+            // NaN
+
+            console.log(parseInt('123', 8));
+            // 可以指定进制
+
+            console.log(parseInt('123px'));
+            // 从字符串左边开始解析整数字符串
+
+            console.log(parseFloat('12.3'));
+
+            // 当传入的参数是数字而不是字符串时，先会将数字转化为字符串，可以利用这一性质进行取整
+
+            let num = 12.345;
+
+            console.log(parseInt(num));
+            // 12
+            // 性能较差，但是可以使用
+        </script>
+    </head>
+
+    <body>
+            
+    </body>
+</html>
+```
+
+#### 布尔值
+
+有且仅有一种方式，Boolean函数。
+
+对于数字，非0和Infinity转化为true，0、NaN转化为false；对于字符串，空串转化为false，其余均为true；null和undefined都转化为false；对象一般都会为转化为true。
+
+
+
+## 运算符
+
+operator，又可以叫做操作符。
+
+### 算数运算符
+
+```
++ - * / **(幂运算) %
+```
+
+**JavaScript的除法不是整除法**
+
+除0的返回值是Infinity，并不会报错。
+
+JS的幂并不要求指数是整数，如：
+
+```js
+9 ** 0.5 = 3;
+```
+
+
+
+JS是一门弱类型语言，运算时会进行自动类型转化，如数字和其他类型进行算数运算，会先将其他类型通过Number函数转化为数字，再进行计算。如果转化的NaN，最终得到的结果也是NaN。
+
+除了与字符串的加法外，一般JS中的算术运算自动数据类型转化都是转成Number，而在与字符串做加法时，则是将其他类型的数据通过String函数转化为字符串，再做拼接。**因此，加法是个特例。**
+
+以上两种都称作隐式类型转化。
+
+我们可以利用隐式类型转化把其他类型的数据转化为字符串，如：
+
+```js
+a = a + ''  // 与调用String函数相同
+```
+
+### 赋值运算符
+
+```
+= += -= *= /= %= **=
+```
+
+= 是把右边的内容赋值给等式左边的变量。
+
+```js
+let  a = 10;
+let b = a;
+
+// a再做修改也并不会影响b的引用
+```
+
+a = a + 5 等价于 a += 5
+
+JS中还有一个赋值：??= 空赋值，只有变量**只有为null或undefined**才会执行赋值语句。
+
+### 一元的正负
+
+一元即操作对象为1。
+
+一元的+表示正号，-表示负号（符号位取反）。
+
+这里主要涉及一个新的隐式类型转化，若对非数值进行正负的运算，会先将数据类型转化为Number再计算正负。
+
+```html
+<!DOCTYPE html>
+
+<html lang="en">
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+        <title>Title</title>
+
+        <script type="text/javascript">
+            let a = '123';
+
+            a = +a;  // 与调用Number函数无异
+
+            console.log(a);  // 数字的123
+        </script>
+    </head>
+
+    <body>
+            
+    </body>
+</html>
+```
+
+### 自增和自减
+
+```
+++ --
+```
+
+执行规则和C语言完全相同，也区分前缀（先使用后计算）和后缀（先计算后使用）使用。
+
+```js
+let n = 5;
+let result = n++ + ++n + n;
+// 结果为19
+```
+
+### 逻辑运算符
+
+#### 非
+
+!: 逻辑取反，对bool值进行取反操作。
+
+对非布尔值进行取反，先将其他类型的数据转化为布尔值，再取反。
+
+因此可以借助这个隐式类型转化做这样的操作：
+
+```js
+let a = 1;
+a = !!a;  // 与调用Boolean函数相同
 ```
 
