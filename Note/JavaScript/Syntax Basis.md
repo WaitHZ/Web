@@ -1050,3 +1050,208 @@ if(a > 10) {
 #### if-else语句
 
 总会执行一部分代码，条件满足了执行if后的，若没有满足就执行else后的代码。总会存在二选一执行的代码块。
+
+若希望更多的选择，可以使用else if，最终也可以没有else，如果有else至少会执行一个代码块。
+
+一旦条件成立，执行了这个代码块，下方的条件都不再继续判断。可以借助合适的条件编写顺序简化代码。
+
+```html
+<!DOCTYPE html>
+
+<html lang="en">
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+        <title>Title</title>
+
+        <script type="text/javascript">
+        	let age = 78;
+
+        	if(age > 100) {
+        		alert('你真是应该长寿的人');
+        	}
+        	else if(age >= 60) {
+        		alert('你已经退休了');
+        	}
+        	else if(age >= 18) {
+        		alert('你已经成年了');
+        	}
+        	else {
+        		alert('你还是个孩子');
+        	}
+
+        	
+        </script>
+    </head>
+
+    <body>
+            
+    </body>
+</html>
+```
+
+补充一个知识点（JS中的输入函数）：
+
+```js
+prompt('输入提示');   // 返回字符串
+
+num = +prompt('输入一个数字');
+```
+
+
+
+```html
+<!DOCTYPE html>
+
+<html lang="en">
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+        <title>Title</title>
+
+        <script type="text/javascript">
+        	let num;
+
+        	num = +prompt('请输入一个数字');
+
+        	// NaN不与任何值相等，额外提供了函数
+        	if(isNaN(num)) {
+        		alert('这不是一个数字');
+        	} 
+        	else if(num % 1 != 0) {
+        		// 判断是否为小数的简单办法
+        		alert('输入的是是一个小数');
+        	}
+        	else {
+        		if(num % 2 == 1) {
+        			console.log('是一个奇数');
+        		} 
+        		else {
+        			console.log('是一个偶数');
+        		}
+        	}
+        	
+        </script>
+    </head>
+
+    <body>
+            
+    </body>
+</html>
+```
+
+检查多个数值中是否存在NaN，可以直接用下方的关系运算：
+
+```js
+isNaN(a + b + c);
+```
+
+#### switch语句
+
+```js
+switch(表达式) {
+    case 表达式: 代码;
+    case 表达式: 代码;
+    default: 代码;  // 若出现，总会执行一段代码
+}
+```
+
+执行流程就是将switch后的表达式和case后的表达式进行全等比较，如果满足全等就执行相应case后的代码。
+
+需要注意的是，如果没有break，则自当前case处开始执行代码。如果不希望这样，可以通过添加break实现。
+
+```js
+switch(表达式) {
+    case 表达式: 代码; break;
+    case 表达式: 代码; break;
+    default: 代码;  // 若出现，总会执行一段代码  else的作用
+}
+```
+
+default不写在最后也是最后执行。
+
+与if-else的区别就是在多个全等判断时可以使结构更加清晰。
+
+### 循环语句
+
+循环语句可以使指定的代码反复执行。
+
+#### while语句
+
+```js
+while(condition) {
+    code;
+}  // 注意循环变量的修改
+```
+
+当一个循环的条件恒为true时，循环就为死循环。
+
+循环的三个要点：
+
+1. 初始化表达式（初始化循环变量）；
+2. 设置条件表达式；
+3. 更新表达式（修改循环变量）。
+
+#### do while语句
+
+```js
+do {
+    code;
+} while(condition);
+```
+
+相较于while，至少会执行一次。
+
+#### for语句
+
+```js
+for(初始化变量; 循环条件; 更新表达式) {
+    代码;
+}
+```
+
+初始化表达式在整个循环的声明周期中只会执行一次。三个表达式可以选择性的省略。
+
+
+
+*注意for中的内容都属于一个代码块：
+
+```js
+for(let i = 0; i < 10; i++) {
+    ;
+}
+
+console.log(i);  // Undefined
+```
+
+也就是i只能在循环内部使用，var就可以在外部使用。
+
+
+
+创建死循环的方式：
+
+```js
+while(true) {
+    
+}
+
+do {
+    
+} while(true);
+
+for(;true;) {
+    
+}
+```
+
+
+
+题目水下花束可以利用索引获取字符串字符，再利用类型转化，实现数字各位的获取。
